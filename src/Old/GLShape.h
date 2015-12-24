@@ -23,6 +23,7 @@
 ********************************************************************************/
 
 #include <cmath>
+#include <QColor>
 #include "QGLViewer/vec.h"
 
 class GLUquadric;

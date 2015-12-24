@@ -10,8 +10,8 @@ LIBS += $$BUILD_DIR/libQui.a \
         $$BUILD_DIR/libLayer.a \
         $$BUILD_DIR/libOld.a \
         $$BUILD_DIR/libParser.a \
-        $$BUILD_DIR/libData.a \
         $$BUILD_DIR/libConfigurator.a \
+        $$BUILD_DIR/libData.a \
         $$BUILD_DIR/libProcess.a \
         $$BUILD_DIR/libNetwork.a \
         $$BUILD_DIR/libYaml.a \
@@ -19,16 +19,26 @@ LIBS += $$BUILD_DIR/libQui.a \
         $$BUILD_DIR/libUtil.a
 
 include(../common.pri)
-
+LIBS += -lGLU -lgfortran -lopenbabel
 INCLUDEPATH += . ../Util ../Data ../Parser ../Qui ../Layer \
                 ../Configurator ../Network ../Yaml ../Process ../Old
 INCLUDEPATH += $$BUILD_DIR/Qui   # Required for the ui_QuiMainWindow.h header
+
+FORTRAN_SOURCES += $$PWD/symmol.f90
+FORTRAN_OBJECTS += symmol.o
+#fortran.input += $$PWD/symmol.f90
+fortran.input += FORTRAN_SOURCES
+#fortran.output += FORTRAN_OBJECTS
+fortran.output += $$BUILD_DIR/symmol.o
+fortran.commands += gfortran -c $$PWD/symmol.f90 -o $$BUILD_DIR/symmol.o 
+QMAKE_EXTRA_COMPILERS += fortran
 
 macx:FORMS       += $$PWD/PeriodicTableMac.ui
 win32:FORMS      += $$PWD/PeriodicTable.ui
 unix:!macx:FORMS += $$PWD/PeriodicTable.ui
 
-OBJECTS += $$PWD/symmol.o
+
+# OBJECTS += $$BUILD_DIR/symmol.o
 
 SOURCES += \
    $$PWD/FragmentTable.C \
@@ -64,3 +74,5 @@ FORMS += \
    $$PWD/PeriodicTableMac.ui \
    $$PWD/PreferencesBrowser.ui \
    $$PWD/ToolBar.ui \
+
+

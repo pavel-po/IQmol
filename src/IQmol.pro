@@ -11,20 +11,25 @@
 #
 ######################################################################
 
-CONFIG  += ordered
+# CONFIG  += ordered
 
 TEMPLATE = subdirs
 
 SUBDIRS  = Util \
-           Data \
            Qui \
-           Parser \
            Configurator \
-           Old \
            Layer \
+           Process \
+           Old \
            Network \
+           Parser \
+           Data \
            Yaml \
            Plot \
-           Process \
+           Util \
+
+Configurator.depends = Util
+Layer.depends = Old
+
 
 SUBDIRS += Main \

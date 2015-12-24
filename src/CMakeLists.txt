@@ -48,6 +48,8 @@ set(IQmol_RESOURCES
 
 set(IQmol_Old_HEADERS
     Old/Animator.h
+    Old/AtomicDensityData.h
+    Old/AtomicDensity.h
     Old/BasicServer.h
     Old/BoundingBoxDialog.h
     Old/GridEvaluator.h
@@ -61,7 +63,7 @@ set(IQmol_Old_HEADERS
     Old/MeshDecimator.h
     Old/ParseJobFiles.h
     Old/PBSServer.h
-    #Old/Process.h
+    Old/Process.h
     Old/ProcessMonitor.h
     Old/ProgressDialog.h
     Old/QCProcess.h
@@ -87,7 +89,7 @@ set(IQmol_Old_HEADERS
 set(IQmol_Old_SOURCES
     Old/Animator.C
     Old/AtomicDensity.C
-    Old/BasicServer.C
+    #Old/BasicServer.C
     Old/BoundingBoxDialog.C
     Old/BuildAtomHandler.C
     Old/BuildEfpFragmentHandler.C
@@ -103,10 +105,10 @@ set(IQmol_Old_SOURCES
     Old/GridEvaluator.C
     Old/GridInfoDialog.C
     Old/IQmol.C
-    Old/JobInfo.C
+    #Old/JobInfo.C
     Old/Lebedev.C
-    Old/LocalConnectionThread.C
-    Old/LocalHost.C
+    #Old/LocalConnectionThread.C
+    #Old/LocalHost.C
     Old/LogMessageDialog.C
     Old/ManipulatedFrameSetConstraint.C
     Old/ManipulateHandler.C
@@ -114,25 +116,25 @@ set(IQmol_Old_SOURCES
     Old/MarchingCubes.C
     Old/MeshDecimator.C
     Old/ParseJobFiles.C
-    Old/PBSServer.C
+    #Old/PBSServer.C
     #Old/Process.C
-    Old/ProcessMonitor.C
+    #Old/ProcessMonitor.C
     Old/ProgressDialog.C
-    Old/QCProcess.C
+    #Old/QCProcess.C
     Old/ReindexAtomsHandler.C
-    Old/RemoteHost.C
-    Old/SecureConnection.C
-    Old/SecureConnectionThread.C
+    #Old/RemoteHost.C
+    #Old/SecureConnection.C
+    #Old/SecureConnectionThread.C
     Old/SelectHandler.C
-    Old/Server.C
-    Old/ServerDialog.C
-    Old/ServerListDialog.C
-    Old/ServerOptionsDialog.C
-    Old/ServerQueue.C
-    Old/ServerQueueDialog.C
-    Old/ServerRegistry.C
-    Old/ServerTask.C
-    Old/SGEServer.C
+    #Old/Server.C
+    #Old/ServerDialog.C
+    #Old/ServerListDialog.C
+    #Old/ServerOptionsDialog.C
+    #Old/ServerQueue.C
+    #Old/ServerQueueDialog.C
+    #Old/ServerRegistry.C
+    #Old/ServerTask.C
+    #Old/SGEServer.C
     Old/ShaderDialog.C
     Old/ShaderLibrary.C
     Old/Snapshot.C
@@ -140,7 +142,7 @@ set(IQmol_Old_SOURCES
     Old/Spline.C
     Old/SurfaceAnimatorDialog.C
     Old/SymmetryToleranceDialog.C
-    #Old/System.C
+    Old/System.C
     Old/UndoCommands.C
 )
 
@@ -149,12 +151,12 @@ set(IQmol_Old_FORMS
     Old/GetVaultKeyDialog.ui
     Old/GridInfoDialog.ui
     Old/LogMessageDialog.ui
-    Old/ProcessMonitor.ui
+    #Old/ProcessMonitor.ui
     Old/ProgressDialog.ui
-    Old/ServerDialog.ui
-    Old/ServerListDialog.ui
-    Old/ServerOptionsDialog.ui
-    Old/ServerQueueDialog.ui
+    #Old/ServerDialog.ui
+    #Old/ServerListDialog.ui
+    #Old/ServerOptionsDialog.ui
+    #Old/ServerQueueDialog.ui
     Old/ShaderDialog.ui
     Old/Snapshot.ui
     Old/SurfaceAnimatorDialog.ui
@@ -169,6 +171,7 @@ set(IQmol_Configurator_HEADERS
     Configurator/CubeDataConfigurator.h
     Configurator/DipoleConfigurator.h
     Configurator/EfpFragmentListConfigurator.h
+    Configurator/ExcitedStatesConfigurator.h
     Configurator/FileConfigurator.h
     Configurator/FrequenciesConfigurator.h
     Configurator/GeometryListConfigurator.h
@@ -185,6 +188,7 @@ set(IQmol_Configurator_SOURCES
     Configurator/CubeDataConfigurator.C
     Configurator/DipoleConfigurator.C
     Configurator/EfpFragmentListConfigurator.C
+    Configurator/ExcitedStatesConfigurator.C
     Configurator/FileConfigurator.C
     Configurator/FrequenciesConfigurator.C
     Configurator/GeometryListConfigurator.C
@@ -200,6 +204,7 @@ set(IQmol_Configurator_FORMS
     Configurator/CubeDataConfigurator.ui
     Configurator/DipoleConfigurator.ui
     Configurator/EfpFragmentListConfigurator.ui
+    Configurator/ExcitedStatesConfigurator.ui
     Configurator/FileConfigurator.ui
     Configurator/FrequenciesConfigurator.ui
     Configurator/GeometryListConfigurator.ui
@@ -221,7 +226,9 @@ set(IQmol_Data_SOURCES
     Data/DataFactory.C
     Data/EfpFragment.C
     Data/EfpFragmentLibrary.C
+    Data/ElectronicTransition.C
     Data/Energy.C
+    Data/ExcitedStates.C
     Data/File.C
     Data/Frequencies.C
     Data/Geometry.C
@@ -233,7 +240,10 @@ set(IQmol_Data_SOURCES
     Data/MolecularOrbitals.C
     Data/MolecularOrbitalsList.C
     Data/MultipoleExpansion.C
+    Data/NmrData.C
     Data/NmrReference.C
+    Data/NmrReferenceLibrary.C
+    Data/OrbitalSymmetries.C
     Data/PointCharge.C
     Data/RemSectionData.C
     Data/Shell.C
@@ -264,6 +274,7 @@ set(IQmol_Layer_HEADERS
     Layer/DipoleLayer.h
     Layer/EfpFragmentLayer.h
     Layer/EfpFragmentListLayer.h
+    Layer/ExcitedStatesLayer.h
     Layer/FileLayer.h
     Layer/FrequenciesLayer.h
     Layer/GeometryLayer.h
@@ -272,9 +283,11 @@ set(IQmol_Layer_HEADERS
     Layer/GLObjectLayer.h
     Layer/GroupLayer.h
     Layer/InfoLayer.h
+    Layer/LayerFactory.h
     Layer/Layer.h
     Layer/MolecularOrbitalsLayer.h
     Layer/MoleculeLayer.h
+    Layer/NmrLayer.h
     Layer/PrimitiveLayer.h
     Layer/SurfaceLayer.h
 )
@@ -292,6 +305,7 @@ set(IQmol_Layer_SOURCES
     Layer/DipoleLayer.C
     Layer/EfpFragmentLayer.C
     Layer/EfpFragmentListLayer.C
+    Layer/ExcitedStatesLayer.C
     Layer/FileLayer.C
     Layer/FrequenciesLayer.C
     Layer/GeometryLayer.C
@@ -302,6 +316,7 @@ set(IQmol_Layer_SOURCES
     Layer/LayerFactory.C
     Layer/MolecularOrbitalsLayer.C
     Layer/MoleculeLayer.C
+    Layer/NmrLayer.C
     Layer/PrimitiveLayer.C
     Layer/SurfaceLayer.C
 )
@@ -395,7 +410,7 @@ set(IQmol_Process_FORMS
 
 set(IQmol_Util_HEADERS
     Util/ColorGradientDialog.h
-#    Util/Matrix.h
+    Util/Matrix.h
     Util/QMsgBox.h
     Util/Task.h
     Util/Timer.h
@@ -477,11 +492,11 @@ set(IQmol_QUI_SOURCES
 )
 
 set(IQmol_QUI_FORMS
-    QUI/GeometryConstraintDialog.ui
-    QUI/OptionDatabaseForm.ui
-    QUI/OptionListEditor.ui
-    QUI/OptionNumberEditor.ui
-    QUI/QuiMainWindow.ui
+    Qui/GeometryConstraintDialog.ui
+    Qui/OptionDatabaseForm.ui
+    Qui/OptionListEditor.ui
+    Qui/OptionNumberEditor.ui
+    Qui/QuiMainWindow.ui
 )
 set_property(SOURCE ${IQmol_QUI_SOURCES} APPEND PROPERTY
     COMPILE_DEFINITIONS QCHEM_UI)
@@ -541,7 +556,7 @@ set(IQmol_Yaml_SOURCES
     Yaml/yaml_parser.cpp
 )
 
-qt4_wrap_cpp(IQmol_HEADERS_MOC
+qt5_wrap_cpp(IQmol_HEADERS_MOC
     ${IQmol_HEADERS}
     ${IQmol_Main_HEADERS}
     ${IQmol_Configurator_HEADERS}
@@ -552,13 +567,13 @@ qt4_wrap_cpp(IQmol_HEADERS_MOC
     ${IQmol_Process_HEADERS}
     ${IQmol_Util_HEADERS})
 
-qt4_wrap_cpp(IQmol_QUI_HEADERS_MOC
+qt5_wrap_cpp(IQmol_QUI_HEADERS_MOC
     ${IQmol_QUI_HEADERS})
 
-qt4_wrap_cpp(IQmol_QUI_HEADERS2_MOC
+qt5_wrap_cpp(IQmol_QUI_HEADERS2_MOC
     ${IQmol_QUI_HEADERS2})
 
-qt4_wrap_ui(IQmol_FORMS_HEADERS
+qt5_wrap_ui(IQmol_FORMS_HEADERS
     ${IQmol_FORMS}
     ${IQmol_Main_FORMS}
     ${IQmol_Configurator_FORMS}
@@ -566,10 +581,10 @@ qt4_wrap_ui(IQmol_FORMS_HEADERS
     ${IQmol_Process_FORMS}
     ${IQmol_Util_FORMS})
 
-qt4_wrap_ui(IQmol_QUI_FORMS_HEADERS
+qt5_wrap_ui(IQmol_QUI_FORMS_HEADERS
     ${IQmol_QUI_FORMS})
 
-qt4_add_resources(IQmol_RESOURCES_RCC ${IQmol_RESOURCES})
+qt5_add_resources(IQmol_RESOURCES_RCC ${IQmol_RESOURCES})
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})

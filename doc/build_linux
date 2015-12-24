@@ -2,18 +2,17 @@
                       Building IQmol From Source on Linux
                      =====================================
 
-These steps were used to compile under Ubuntu 13.04
+1) Ensure the necessary utilities and libraries are installed:
+   On Debian Jessie 8.2.0, Ubuntu 15.04:
 
-1) Insure the necessary utilities and libraries are installed:
+      apt-get install git cmake g++ gfortran libglu1-mesa \ 
+      libglu1-mesa-dev qt5-default qt5-qmake libboost-dev \ 
+      libboost-iostreams-dev libboost-serialization-dev \ 
+      libssl-dev libopenbabel-dev libqt5designercomponents5 \ 
+      libqt5designer5 qttools5-dev qttools-dev-tools \ 
+      freeglut3-dev libssh2-1 libssh2-1-dev
 
-     apt-get install git
-     apt-get install cmake
-     apt-get install gfortran
-     apt-get install libssl-dev
-     apt-get install libboost-dev
-
-
-2) Download the Qt libraries from www.qt.io
+2) If you do not have Qt 5 in the repository, download the Qt libraries from www.qt.io
 
    Note that Qt5 libraries are required and most distributions only have Qt4
    packages so you cannot use apt-get.  The download (~600Mb) seems to be very
@@ -29,65 +28,87 @@ These steps were used to compile under Ubuntu 13.04
 
 
 3) Download the OpenMesh source from www.openmesh.org
+   Current repository is
 
-   The latest version tested is version 3.3 but I needed to specify the C++
-   compiler by adding the following line to the CMakeLists.txt file:
+      git clone https://www.graphics.rwth-aachen.de:9000/OpenMesh/OpenMesh.git
+      cd OpenMesh
 
-     set (CMAKE_CXX_COMPILER "g++-4.4")
+   For OLD versions (for new ones skip this) specify the C++ compiler by adding the following line to
+   the CMakeLists.txt file:
+
+       set (CMAKE_CXX_COMPILER "g++-4.4")
 
    Compile using cmake (both static and shared libraries are written to the
    build/Build/lib directory):
 
-        mkdir build && cd build
-        cmake ../
-        make
+       mkdir build && cd build
+       cmake ../
+       make
+       make install
 
-
-4) Download the OpenBabel source from www.openbable.org
-
-   The latest version of the source is 2.3.2.  As with OpenMesh, I needed to
-   specify the compier as g++-4.4.  Compile using cmake, libraries appear in 
-   the lib directory.
-
-        mkdir build && cd build
-        cmake ../
-        make
-
-   I copied the babelconfig.h file from build/include to include/openbabel.
-
-
-5) Download the LibSSH2 source from www.libssh2.org
+4) If you do not have LibSSH2 in the repository, download the LibSSH2 source 
+   from www.libssh2.org
 
    The latest version tested is 1.6.  Compilation is straightforward and
    results in shared and static libraries located in src/.libs
 
-        ./configure --with-openssl --with-libz
+       ./configure --with-openssl --with-libz
+       make
+
+
+5) If you do not have OpenSSL in the repository, download the OpenSSL source 
+   from www.openssl.org
+
+       ./config
         make
 
 
-6) Download the OpenSSL source from www.openssl.org
+6) Download the QGLViewer source from libqglviewer.com or it's repository
 
-        ./config
-         make
+        git clone https://github.com/GillesDebunne/libQGLViewer.git
 
+   Replace headers camera.h config.h qglviewer.h by the corrected ones 
+   (original ones do not have all necessary definitions)
+   
+        cp IQmol/replace/*.h libQGLViewer/QGLViewer/
 
-7) Download the QGLViewer source from libqglviewer.com and compile using qmake
+   Compile using qmake
 
+        cd libQGLViewers
         qmake QGLVIEWER_STATIC=yes QGLViewer.pro
         make
+        make install
 
 
-8) Compile the SymMol object file in src/Main
-   There is one Fortran source file that must be compiled using gfortran.  I haven't 
-   worked out how to get Qt to do this in the .pro file:
+7) Compile IQmol  
 
-       gfortran -c symmol.f90
+        cd IQmol
+        ./configure
+ 
+  New cmake script generates src/common.pri, which is qmake config, with 
+   all necessary paths, but on Ubuntu it fails to provide the correct path
+   to OpenBabel libraries. You may check it in the variable LIBS in 
+   src/common.pri
+   
+        cd src
+        qmake
+        make
 
+   After compiling and linking you should have an IQmol binary in IQmol
+   directory. Add paths to compiled libraries to the LD_LIBRARY_PATH variable,
+   export BABEL_LIBDIR, BABEL_DATADIR, QT_PLUGIN_PATH in your ~/.bashrc
 
-9) Compile IQmol  
-   You may need to edit the IQmol/src/common.pri file to reflect the locations
-   of the various installed packages.  I put all the compiled libraries above
-   in the $DEV directory which I specify in .bashrc
+        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":/usr/local/lib
+        export BABEL_LIBDIR=/usr/lib/openbabel/2.3.2
+        export BABEL_DATADIR=/usr/share/openbabel/2.3.2
+        export QT_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/qt5/plugins
 
-       qmake IQmol.pro
-       make
+   After that, re-run shell to export these variables and run IQmol binary.
+   Click Edit -> Preferences and provide the correct path to QChem database
+
+        IQmol/src/Qui/qchem_option.db 
+
+   Inseade of this, you may write this information to 
+
+        ~/.config/iqmol.org/IQmol.conf   
+

@@ -36,6 +36,7 @@
 #include "IQmol.h"
 #include <QStringList>
 #include <QDir>
+#include <QtGlobal>
 #include <QSysInfo>
 #include "QsLog.h"
 #include "QsLogDest.h"
@@ -174,9 +175,11 @@ int main(int argc, char *argv[])
 
     QLOG_INFO() << "---------- Session Started ----------";
     QLOG_INFO() << "IQmol Version: " << IQMOL_VERSION;
+#if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
     QLOG_INFO() << "Platform:     " << QSysInfo::prettyProductName();
     QLOG_INFO() << "              " << QSysInfo::kernelType() << QSysInfo::kernelVersion()
                 << QSysInfo::currentCpuArchitecture();
+#endif
 
 #ifdef Q_OS_LINUX
     QString env(qgetenv("QT_PLUGIN_PATH"));

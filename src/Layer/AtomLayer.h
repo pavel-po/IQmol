@@ -109,7 +109,6 @@ namespace Layer {
          GLfloat m_color[4];
          QString symbol() { return m_symbol; }
          double getRadius() { return getRadius(isSelected()); }
-         void updateValency();
 
       private:
          QString getLabel(LabelType const type);
@@ -139,10 +138,7 @@ namespace Layer {
          bool    m_smallerHydrogens;
          bool    m_haveNmrShift;
          int     m_reorderIndex;
-         int     m_valency;
          qglviewer::Vec m_displacement;
-
-         QAction* m_valencyMenu;
    };
 
    
