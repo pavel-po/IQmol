@@ -13,7 +13,8 @@
       freeglut3-dev libssh2-1 libssh2-1-dev
 
 2) If you do not have Qt 5 in the repository, download the Qt libraries from www.qt.io
-
+   Ig general, follow the instructions for building of Qt 5 on the web site.
+   
    Note that Qt5 libraries are required and most distributions only have Qt4
    packages so you cannot use apt-get.  The download (~600Mb) seems to be very
    slow and it is recommended that an appropriate mirror is used.  Be sure to 
@@ -86,7 +87,7 @@
         ./configure
  
   New cmake script generates src/common.pri, which is qmake config, with 
-   all necessary paths, but on Ubuntu it fails to provide the correct path
+   all necessary paths, but on Ubuntu and Debian it fails to provide the correct path
    to OpenBabel libraries. You may check it in the variable LIBS in 
    src/common.pri
    
